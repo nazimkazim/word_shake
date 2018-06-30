@@ -38,7 +38,10 @@ function clickBox() {
   boxes.forEach(function(box) {
     box.addEventListener('click', function(e) {
       e.preventDefault();
-      console.log(this.innerHTML);
+      //console.log(this.innerHTML);
+      //return this.innerHTML;
+      word += this.innerHTML;
+      console.log(word);
     });
   });
 }
