@@ -29,7 +29,7 @@ const letters = [
   'z'
 ];
 
-var word = '';
+var searched_word = '';
 
 var boxes = document.querySelectorAll('.square');
 //console.log(boxes);
@@ -40,10 +40,11 @@ function clickBox() {
       e.preventDefault();
       //console.log(this.innerHTML);
       //return this.innerHTML;
-      word += this.innerHTML;
-      console.log(word);
+      searched_word += this.innerHTML;
+      console.log(searched_word);
     });
   });
+  return searched_word;
 }
 
 function randomLetters(boxes) {
@@ -52,7 +53,7 @@ function randomLetters(boxes) {
     let randomLetterNumber = Math.floor(Math.random() * letters.length);
     box.innerHTML = letters[randomLetterNumber].toLocaleUpperCase();
     //console.log(box);
-    console.log(randomLetterNumber);
+    //console.log(randomLetterNumber);
   }
 }
 
@@ -63,7 +64,12 @@ function loadData() {
     if (this.status === 200) {
       const words = JSON.parse(this.responseText);
       for (word in words) {
-        console.log(word);
+        //console.log(word);
+        if (word === clickBox().toLowerCase()) {
+          console.log('true');
+        } else {
+          console.log('false');
+        }
       }
     }
   };
@@ -71,4 +77,4 @@ function loadData() {
 }
 
 randomLetters(boxes);
-clickBox(boxes);
+console.log(clickBox());
