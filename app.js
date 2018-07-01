@@ -41,6 +41,7 @@ function clickBox() {
       //console.log(this.innerHTML);
       //return this.innerHTML;
       searched_word += this.innerHTML;
+      document.querySelector('.input').value = searched_word;
       console.log(searched_word);
     });
   });
@@ -77,4 +78,5 @@ function loadData() {
 }
 
 randomLetters(boxes);
+
 console.log(clickBox());

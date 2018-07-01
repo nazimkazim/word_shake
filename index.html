@@ -6,54 +6,59 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Word Shake Game</title>
   <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css?family=Orbitron:400,700,900" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css">
 </head>
 
 <body>
-  <!-- <div class="flex-grid">
-    <div data-letter="1" class="square"></div>
-    <div data-letter="2" class="square"></div>
-    <div data-letter="3" class="square"></div>
-    <div data-letter="4" class="square"></div>
-    <div data-letter="5" class="square"></div>
-    <div data-letter="6" class="square"></div>
-    <div data-letter="7" class="square"></div>
-    <div data-letter="8" class="square"></div>
-    <div data-letter="9" class="square"></div>
-    <div data-letter="10" class="square"></div>
-    <div data-letter="11" class="square"></div>
-    <div data-letter="12" class="square"></div>
-    <div data-letter="13" class="square"></div>
-    <div data-letter="14" class="square"></div>
-    <div data-letter="15" class="square"></div>
-    <div data-letter="16" class="square"></div>
-  </div> -->
-  <table>
-    <tr>
-      <td class="square"></td>
-      <td class="square"></td>
-      <td class="square"></td>
-      <td class="square"></td>
-    </tr>
-    <tr>
-      <td class="square"></td>
-      <td class="square"></td>
-      <td class="square"></td>
-      <td class="square"></td>
-    </tr>
-    <tr>
-      <td class="square"></td>
-      <td class="square"></td>
-      <td class="square"></td>
-      <td class="square"></td>
-    </tr>
-    <tr>
-      <td class="square"></td>
-      <td class="square"></td>
-      <td class="square"></td>
-      <td class="square"></td>
-    </tr>
-  </table>
-  <button id="button">submit</button>
+  <div class="contianer">
+    <table class="table is-bordered">
+      <tr>
+        <td class="square"></td>
+        <td class="square"></td>
+        <td class="square"></td>
+        <td class="square"></td>
+      </tr>
+      <tr>
+        <td class="square"></td>
+        <td class="square"></td>
+        <td class="square"></td>
+        <td class="square"></td>
+      </tr>
+      <tr>
+        <td class="square"></td>
+        <td class="square"></td>
+        <td class="square"></td>
+        <td class="square"></td>
+      </tr>
+      <tr>
+        <td class="square"></td>
+        <td class="square"></td>
+        <td class="square"></td>
+        <td class="square"></td>
+      </tr>
+    </table>
+    <div class="columns">
+      <div class="column">
+
+      </div>
+      <div class="column has-text-centered">
+        <button class="button is-dark" id="button">Submit</button>
+      </div>
+      <div class="column has-text-centered">
+        <div class="field">
+          <div class="control">
+            <input class="input is-primary" type="text" placeholder="Your Word">
+          </div>
+        </div>
+      </div>
+      <div class="column">
+
+      </div>
+    </div>
+
+  </div>
+
   <script src="app.js"></script>
 </body>
 
