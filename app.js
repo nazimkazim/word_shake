@@ -42,7 +42,7 @@ function clickBox() {
       //return this.innerHTML;
       searched_word += this.innerHTML;
       document.querySelector('.input').value = searched_word;
-      console.log(searched_word);
+      //console.log(searched_word);
     });
   });
   return searched_word;
@@ -60,23 +60,42 @@ function randomLetters(boxes) {
 
 function loadData() {
   const xhr = new XMLHttpRequest();
-  xhr.open('GET', 'words_dictionary.json', true);
+  xhr.open('GET', 'words_dictionary_full.json', true);
   xhr.onload = function() {
     if (this.status === 200) {
-      const words = JSON.parse(this.responseText);
-      for (word in words) {
-        //console.log(word);
-        if (word === clickBox().toLowerCase()) {
-          console.log('true');
-        } else {
-          console.log('false');
-        }
-      }
+      //const words = JSON.parse(this.responseText);
+      const words = Object.keys(JSON.parse(this.responseText));
+      //console.log(words);
+      //console.log(clickBox().toLocaleLowerCase());
+      binarySearch(words, clickBox().toLocaleLowerCase());
+      document.querySelector('.input').value = '';
+      searched_word = '';
     }
   };
   xhr.send();
 }
 
-randomLetters(boxes);
+function binarySearch(items, value) {
+  var startIndex = 0,
+    stopIndex = items.length - 1,
+    middle = Math.floor((stopIndex + startIndex) / 2);
 
-console.log(clickBox());
+  while (items[middle] != value && startIndex < stopIndex) {
+    //adjust search area
+    if (value < items[middle]) {
+      stopIndex = middle - 1;
+    } else if (value > items[middle]) {
+      startIndex = middle + 1;
+    }
+
+    //recalculate middle
+    middle = Math.floor((stopIndex + startIndex) / 2);
+  }
+
+  //make sure it's the right value
+  //console.log(items[middle] === value);
+  return console.log(items[middle] != value ? -1 : middle);
+}
+
+clickBox();
+randomLetters(boxes);
