@@ -1,4 +1,5 @@
 document.getElementById('button').addEventListener('click', loadData);
+var wordsList = document.querySelector('.words-list');
 
 const letters = [
   'a',
@@ -40,6 +41,7 @@ boxes.forEach(function(box) {
     searched_word += this.innerHTML;
     document.querySelector('.input').value = searched_word;
   });
+
   console.log(searched_word);
   return searched_word;
 });
@@ -54,14 +56,29 @@ function randomLetters(boxes) {
   }
 }
 
+function createList(word) {
+  // create LI elelment
+  var li = document.createElement('LI');
+  // create text node
+  var textNode = document.createTextNode(word);
+  li.appendChild(textNode);
+  wordsList.appendChild(li);
+}
+
 function loadData() {
   const xhr = new XMLHttpRequest();
   xhr.open('GET', 'words_dictionary_full.json', true);
   xhr.onload = function() {
     if (this.status === 200) {
       const words = Object.keys(JSON.parse(this.responseText));
-      console.log(words);
-      binarySearch(words, searched_word.toLocaleLowerCase());
+      //console.log(words);
+
+      // check if there is a word in the database
+      if (binarySearch(words, searched_word.toLocaleLowerCase()) !== -1) {
+        createList(searched_word);
+        console.log('hey');
+      }
+
       searched_word = '';
       document.querySelector('.input').value = '';
     }
@@ -87,8 +104,7 @@ function binarySearch(items, value) {
   }
 
   //make sure it's the right value
-  return console.log(items[middle] != value ? -1 : middle);
+  return items[middle] != value ? -1 : middle;
 }
 
-//clickBox();
 randomLetters(boxes);
