@@ -76,7 +76,7 @@ function loadData() {
       // check if there is a word in the database
       if (binarySearch(words, searched_word.toLocaleLowerCase()) !== -1) {
         createList(searched_word);
-        console.log('hey');
+        console.log('done');
       }
 
       searched_word = '';
