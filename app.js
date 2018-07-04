@@ -34,19 +34,15 @@ var searched_word = '';
 var boxes = document.querySelectorAll('.square');
 //console.log(boxes);
 
-function clickBox() {
-  boxes.forEach(function(box) {
-    box.addEventListener('click', function(e) {
-      e.preventDefault();
-      //console.log(this.innerHTML);
-      //return this.innerHTML;
-      searched_word += this.innerHTML;
-      document.querySelector('.input').value = searched_word;
-      //console.log(searched_word);
-    });
+boxes.forEach(function(box) {
+  box.addEventListener('click', function(e) {
+    e.preventDefault();
+    searched_word += this.innerHTML;
+    document.querySelector('.input').value = searched_word;
   });
+  console.log(searched_word);
   return searched_word;
-}
+});
 
 function randomLetters(boxes) {
   for (var i = 0; i < boxes.length; i++) {
@@ -63,13 +59,11 @@ function loadData() {
   xhr.open('GET', 'words_dictionary_full.json', true);
   xhr.onload = function() {
     if (this.status === 200) {
-      //const words = JSON.parse(this.responseText);
       const words = Object.keys(JSON.parse(this.responseText));
-      //console.log(words);
-      //console.log(clickBox().toLocaleLowerCase());
-      binarySearch(words, clickBox().toLocaleLowerCase());
-      document.querySelector('.input').value = '';
+      console.log(words);
+      binarySearch(words, searched_word.toLocaleLowerCase());
       searched_word = '';
+      document.querySelector('.input').value = '';
     }
   };
   xhr.send();
@@ -93,9 +87,8 @@ function binarySearch(items, value) {
   }
 
   //make sure it's the right value
-  //console.log(items[middle] === value);
   return console.log(items[middle] != value ? -1 : middle);
 }
 
-clickBox();
+//clickBox();
 randomLetters(boxes);
