@@ -1,5 +1,5 @@
 document.getElementById('button').addEventListener('click', loadData);
-var wordsList = document.querySelector('.words-list');
+var wordsList = document.querySelector('.t-body');
 
 const letters = [
   'a',
@@ -31,6 +31,7 @@ const letters = [
 ];
 
 var searched_word = '';
+var tr = '';
 
 var boxes = document.querySelectorAll('.square');
 //console.log(boxes);
@@ -56,13 +57,17 @@ function randomLetters(boxes) {
   }
 }
 
-function createList(word) {
-  // create LI elelment
-  var li = document.createElement('LI');
-  // create text node
-  var textNode = document.createTextNode(word);
-  li.appendChild(textNode);
-  wordsList.appendChild(li);
+function createList(word, points, number) {
+  // create TR elelment
+
+  tr += `
+  <tr>
+    <th>${number}</th>
+    <th>${word}</th>
+    <th>${number}</th>
+  </tr>
+  `;
+  wordsList.innerHTML = tr;
 }
 
 function loadData() {
@@ -75,7 +80,7 @@ function loadData() {
 
       // check if there is a word in the database
       if (binarySearch(words, searched_word.toLocaleLowerCase()) !== -1) {
-        createList(searched_word);
+        createList(searched_word, 1, 1);
         console.log('done');
       }
 
