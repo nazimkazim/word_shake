@@ -32,6 +32,8 @@ const letters = [
 
 var searched_word = '';
 var tr = '';
+var wordsBank = [];
+var wordsCount = 0;
 
 var boxes = document.querySelectorAll('.square');
 //console.log(boxes);
@@ -47,6 +49,12 @@ boxes.forEach(function(box) {
   return searched_word;
 });
 
+function checkRepeatedWords(arr, newWord) {
+  if (arr.includes(newWord)) {
+    return true;
+  }
+}
+
 function randomLetters(boxes) {
   for (var i = 0; i < boxes.length; i++) {
     let box = boxes[i];
@@ -59,12 +67,11 @@ function randomLetters(boxes) {
 
 function createList(word, points, number) {
   // create TR elelment
-
   tr += `
   <tr>
     <th>${number}</th>
     <th>${word}</th>
-    <th>${number}</th>
+    <th>${points}</th>
   </tr>
   `;
   wordsList.innerHTML = tr;
@@ -80,8 +87,17 @@ function loadData() {
 
       // check if there is a word in the database
       if (binarySearch(words, searched_word.toLocaleLowerCase()) !== -1) {
-        createList(searched_word, 1, 1);
-        console.log('done');
+        let wordsPoint = searched_word.length;
+        if (!checkRepeatedWords(wordsBank, searched_word)) {
+          console.log('uppps');
+          createList(searched_word, wordsPoint, wordsCount);
+          wordsBank.push(searched_word);
+          wordsCount += 1;
+        }
+        //console.log(words);
+
+        //console.log(wordsBank);
+        //console.log('done');
       }
 
       searched_word = '';
@@ -109,6 +125,7 @@ function binarySearch(items, value) {
   }
 
   //make sure it's the right value
+  console.log(middle);
   return items[middle] != value ? -1 : middle;
 }
 
