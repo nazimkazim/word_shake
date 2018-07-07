@@ -30,26 +30,45 @@ const letters = [
   'z'
 ];
 
+// Assign  empty string to search word
 var searched_word = '';
+
+// Assign empty string to table row
 var tr = '';
+
+// Assign empty array to words bank
 var wordsBank = [];
+
+// Assign zero to words count variable
 var wordsCount = 0;
 
+// Cache tiles on the board
 var boxes = document.querySelectorAll('.square');
+
+// Cache table body
 var tbody = document.querySelector('.t-body');
 //console.log(boxes);
 
+/*
+  Loop through each tile in the board
+  and add click event to each tile
+  when each tile is clicked add its text value, e.g.
+  letter to a searched_word variable, e.g. 
+  concatinating each clicked letter
+*/
 boxes.forEach(function(box) {
   box.addEventListener('click', function(e) {
     e.preventDefault();
     searched_word += this.innerHTML;
     document.querySelector('.input').value = searched_word;
   });
-
   console.log(searched_word);
+
+  // Return value
   return searched_word;
 });
 
+// Check if a word is n the array
 function checkRepeatedWords(arr, newWord) {
   if (arr.includes(newWord)) {
     return true;
@@ -81,7 +100,7 @@ function createList(word, points, number) {
 function highlightWord(target_word) {
   var tbody = document.querySelector('.t-body');
   var children = tbody.children;
-  for (var i = 0; i <= children.length; i++) {
+  for (var i = 0; i < children.length; i++) {
     let child = children[i].children[1];
     let text = child.innerHTML;
     if (text === target_word) {
@@ -89,6 +108,9 @@ function highlightWord(target_word) {
       child.classList.add('has-text-warning');
     }
     console.log(child);
+    setTimeout(function() {
+      child.classList.remove('has-text-warning');
+    }, 2000);
   }
 }
 
@@ -100,27 +122,45 @@ function loadData() {
       const words = Object.keys(JSON.parse(this.responseText));
       //console.log(words);
 
-      // check if there is a word in the database
+      /*
+      check if there is a word in the database
+      and it is not repeated
+      */
       if (
         binarySearch(words, searched_word.toLocaleLowerCase()) !== -1 &&
         !checkRepeatedWords(wordsBank, searched_word)
       ) {
+        // Get number of points - number of points equal length of a word
         let wordsPoint = searched_word.length;
 
+        // Call createList function, add words to the table on the left
         createList(searched_word, wordsPoint, wordsCount);
-        wordsBank.push(searched_word);
-        wordsCount += 1;
-        searched_word = '';
-        document.querySelector('.input').value = '';
-        //console.log(words);
 
+        // Push a new word into array
+        wordsBank.push(searched_word);
+
+        // Increment number of words in the table
+        wordsCount += 1;
+
+        // Clear searched word after submition
+        searched_word = '';
+
+        // Clear input after submition
+        document.querySelector('.input').value = '';
+
+        //console.log(words);
         //console.log(wordsBank);
         //console.log('done');
       } else {
-        console.log('uppps');
+        //console.log('uppps');
+
+        // Highlight a word in a table if it is a repeated word
         highlightWord(searched_word);
 
+        // Clear searched word
         searched_word = '';
+
+        // Clear input
         document.querySelector('.input').value = '';
       }
     }
@@ -128,6 +168,9 @@ function loadData() {
   xhr.send();
 }
 
+/*
+  Binary search function
+*/
 function binarySearch(items, value) {
   var startIndex = 0,
     stopIndex = items.length - 1,
@@ -150,4 +193,5 @@ function binarySearch(items, value) {
   return items[middle] != value ? -1 : middle;
 }
 
+// Calling random letters function
 randomLetters(boxes);
