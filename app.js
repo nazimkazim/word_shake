@@ -1,34 +1,40 @@
 document.getElementById('button').addEventListener('click', loadData);
 var wordsList = document.querySelector('.t-body');
 
-const letters = [
-  'a',
+const vowels = ['a', 'e', 'i', 'o', 'u'];
+const consonants = [
   'b',
   'c',
   'd',
-  'e',
   'f',
   'g',
   'h',
-  'i',
   'j',
   'k',
   'l',
   'm',
   'n',
-  'o',
   'p',
   'q',
   'r',
   's',
   't',
-  'u',
   'v',
   'w',
   'x',
-  'y',
-  'z'
+  'y'
 ];
+
+function shuffle(a) {
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+let selectedChars = vowels.concat(consonants);
+let shuffledChars = shuffle(selectedChars);
+console.log(shuffledChars);
 
 // Assign  empty string to search word
 var searched_word = '';
@@ -78,8 +84,9 @@ function checkRepeatedWords(arr, newWord) {
 function randomLetters(boxes) {
   for (var i = 0; i < boxes.length; i++) {
     let box = boxes[i];
-    let randomLetterNumber = Math.floor(Math.random() * letters.length);
-    box.innerHTML = letters[randomLetterNumber].toLocaleUpperCase();
+
+    let randomLetterNumber = Math.floor(Math.random() * shuffledChars.length);
+    box.innerHTML = shuffledChars[i].toLocaleUpperCase();
     //console.log(box);
     //console.log(randomLetterNumber);
   }
