@@ -1,5 +1,8 @@
 document.getElementById('button').addEventListener('click', loadData);
 var wordsList = document.querySelector('.t-body');
+var total = document.querySelector('.total');
+var messageSlot = document.querySelector('.message-slot');
+var totalPoints = 0;
 
 const vowels = ['a', 'e', 'i', 'o', 'u'];
 const consonants = [
@@ -32,7 +35,7 @@ function shuffle(a) {
   }
   return a;
 }
-let selectedChars = vowels.concat(consonants);
+let selectedChars = vowels.concat(consonants).slice(0, 17);
 let shuffledChars = shuffle(selectedChars);
 console.log(shuffledChars);
 
@@ -121,6 +124,19 @@ function highlightWord(target_word) {
   }
 }
 
+function showMessage(messageWord, className) {
+  messageSlot.innerHTML += `
+  <article class="message ${className}">
+    <div class="message-header">
+      <p>${messageWord}</p>
+    </div>
+  </article>
+  `;
+  setTimeout(function() {
+    messageSlot.innerHTML = '';
+  }, 2000);
+}
+
 function loadData() {
   const xhr = new XMLHttpRequest();
   xhr.open('GET', 'words_dictionary_full.json', true);
@@ -142,7 +158,10 @@ function loadData() {
 
         // Call createList function, add words to the table on the left
         createList(searched_word, wordsPoint, wordsCount);
+        showMessage('Correct', 'is-success');
 
+        totalPoints += wordsPoint;
+        total.innerHTML = totalPoints;
         // Push a new word into array
         wordsBank.push(searched_word);
 
@@ -155,7 +174,7 @@ function loadData() {
         // Clear input after submition
         document.querySelector('.input').value = '';
 
-        //console.log(words);
+        console.log(words);
         //console.log(wordsBank);
         //console.log('done');
       } else {
@@ -169,6 +188,7 @@ function loadData() {
 
         // Clear input
         document.querySelector('.input').value = '';
+        showMessage('The Word was not found', 'is-warning');
       }
     }
   };

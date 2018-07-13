@@ -32,3 +32,13 @@ table {
   color: red;
   background-color: blue;
 }
+
+.table {
+  max-height: 50px;
+  background-color: blueviolet;
+  color: red;
+}
+
+.small-padding {
+  padding: 10px;
+}
