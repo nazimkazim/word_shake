@@ -191,9 +191,12 @@ function loadData() {
         console.log(words);
         //console.log(wordsBank);
         //console.log('done');
+      } else if (
+        searched_word === '' &&
+        document.querySelector('.input').value === ''
+      ) {
+        showMessage('Please write a word', 'is-warning');
       } else {
-        //console.log('uppps');
-
         // Highlight a word in a table if it is a repeated word
         highlightWord(searched_word);
 
