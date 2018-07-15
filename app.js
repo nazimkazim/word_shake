@@ -2,6 +2,9 @@ document.getElementById('button').addEventListener('click', loadData);
 var wordsList = document.querySelector('.t-body');
 var total = document.querySelector('.total');
 var messageSlot = document.querySelector('.message-slot');
+document
+  .querySelector('.backspace-btn')
+  .addEventListener('click', removeLetter);
 var totalPoints = 0;
 
 const vowels = ['a', 'e', 'i', 'o', 'u'];
@@ -35,8 +38,9 @@ function shuffle(a) {
   }
   return a;
 }
-let selectedChars = vowels.concat(consonants).slice(0, 17);
-let shuffledChars = shuffle(selectedChars);
+
+let selectedChars = vowels.concat(consonants);
+let shuffledChars = shuffle(selectedChars).slice(0, 17);
 console.log(shuffledChars);
 
 // Assign  empty string to search word
@@ -70,12 +74,22 @@ boxes.forEach(function(box) {
     e.preventDefault();
     searched_word += this.innerHTML;
     document.querySelector('.input').value = searched_word;
+    console.log(searched_word);
   });
-  console.log(searched_word);
 
   // Return value
   return searched_word;
 });
+
+// Remove letter
+function removeLetter() {
+  //console.log('clicked');
+  let newStr = searched_word.slice(0, -1);
+  searched_word = newStr;
+  console.log(searched_word);
+  document.querySelector('.input').value = searched_word;
+  return (searched_word = newStr);
+}
 
 // Check if a word is n the array
 function checkRepeatedWords(arr, newWord) {

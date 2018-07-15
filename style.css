@@ -42,3 +42,7 @@ table {
 .small-padding {
   padding: 10px;
 }
+
+.backspace-btn {
+  cursor: pointer;
+}
