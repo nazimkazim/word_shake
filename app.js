@@ -1,11 +1,16 @@
 document.getElementById('button').addEventListener('click', loadData);
+const timerDisplay = document.querySelector('.display-time-left');
 var wordsList = document.querySelector('.t-body');
 var total = document.querySelector('.total');
 var messageSlot = document.querySelector('.message-slot');
 document
   .querySelector('.backspace-btn')
   .addEventListener('click', removeLetter);
+document.querySelector('#start-btn').addEventListener('click', function() {
+  init();
+});
 var totalPoints = 0;
+var highlight = null;
 
 const vowels = ['a', 'e', 'i', 'o', 'u'];
 const consonants = [
@@ -30,6 +35,12 @@ const consonants = [
   'x',
   'y'
 ];
+
+function init() {
+  // Calling random letters function
+  randomLetters(boxes);
+  timer(180);
+}
 
 function shuffle(a) {
   for (let i = a.length - 1; i > 0; i--) {
@@ -86,7 +97,7 @@ function removeLetter() {
   //console.log('clicked');
   let newStr = searched_word.slice(0, -1);
   searched_word = newStr;
-  console.log(searched_word);
+  //console.log(searched_word);
   document.querySelector('.input').value = searched_word;
   return (searched_word = newStr);
 }
@@ -128,7 +139,7 @@ function highlightWord(target_word) {
     let child = children[i].children[1];
     let text = child.innerHTML;
     if (text === target_word) {
-      console.log('repeated');
+      //console.log('repeated');
       child.classList.add('has-text-warning');
     }
     console.log(child);
@@ -196,10 +207,18 @@ function loadData() {
         document.querySelector('.input').value === ''
       ) {
         showMessage('Please write a word', 'is-warning');
-      } else {
+      } else if (checkRepeatedWords(wordsBank, searched_word)) {
         // Highlight a word in a table if it is a repeated word
         highlightWord(searched_word);
 
+        showMessage('The Word is already in list', 'is-warning');
+
+        // Clear input
+        document.querySelector('.input').value = '';
+
+        // Clear searched word
+        searched_word = '';
+      } else {
         // Clear searched word
         searched_word = '';
 
@@ -237,5 +256,30 @@ function binarySearch(items, value) {
   return items[middle] != value ? -1 : middle;
 }
 
-// Calling random letters function
-randomLetters(boxes);
+function timer(seconds) {
+  const now = Date.now();
+  const then = now + seconds * 1000;
+  displayTimeLeft(seconds);
+  const countdown = setInterval(() => {
+    const secondsLeft = Math.round((then - Date.now()) / 1000);
+
+    // Check if we should stop it
+    if (secondsLeft < 0) {
+      clearInterval(countdown);
+      return;
+    }
+
+    // Display
+    displayTimeLeft(secondsLeft);
+  }, 1000);
+}
+
+function displayTimeLeft(seconds) {
+  const minutes = Math.floor(seconds / 60);
+  const remainderSeconds = seconds % 60;
+  const display = `${minutes}:${
+    remainderSeconds < 10 ? '0' : ''
+  }${remainderSeconds}`;
+  timerDisplay.textContent = display;
+  document.title = display;
+}
