@@ -3,12 +3,16 @@ const timerDisplay = document.querySelector('.display-time-left');
 var wordsList = document.querySelector('.t-body');
 var total = document.querySelector('.total');
 var messageSlot = document.querySelector('.message-slot');
+
 document
   .querySelector('.backspace-btn')
   .addEventListener('click', removeLetter);
+
 document.querySelector('#start-btn').addEventListener('click', function() {
   init();
+  document.querySelector('#start-btn').disabled = true;
 });
+
 var totalPoints = 0;
 var highlight = null;
 
