@@ -199,7 +199,7 @@ function loadData() {
         // Clear input after submition
         document.querySelector('.input').value = '';
 
-        console.log(words);
+        console.log({ words });
         //console.log(wordsBank);
         //console.log('done');
       } else if (
@@ -255,6 +255,10 @@ function binarySearch(items, value) {
   console.log(middle);
   return items[middle] != value ? -1 : middle;
 }
+
+/*
+  Timer function
+*/
 
 function timer(seconds) {
   const now = Date.now();
